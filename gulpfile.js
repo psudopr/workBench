@@ -21,7 +21,7 @@ gulp.task('nodemon', function (cb) {
     script: './bin/www',
 
     // watch core server file(s) that require server restart on change
-    watch: ['app.js']
+    watch: ['app.js', 'routes/*.js']
 
   })
     .on('start', function onStart() {
@@ -76,7 +76,7 @@ gulp.task('scss', function () {
       outputStyle: 'compressed'
     }).on('error', sass.logError)) //specify outputStyle and watch for errors
     .pipe(autoprefixer('last 2 versions'))
-    .pipe(gulp.dest('public/css'))
+    .pipe(gulp.dest('public/css')) //confirm destination, 'public/stylesheets'
     .pipe(bs.stream()); //prompt a reload after completion
 });
 
