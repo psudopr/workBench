@@ -6,6 +6,7 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const nodemon = require('gulp-nodemon');
 const uglify = require('gulp-uglify');
+const wait = require('gulp-wait');
 
 /*
 FIRE UP NODEMON
@@ -70,13 +71,15 @@ gulp.task('scripts', function () {
 SCSS TASK & AUTOPREFIXER
 */
 gulp.task('scss', function () {
-  gulp.src(['staging/scss/style.scss']) //only grabbing style.scss @include will do the concat
+  return gulp.src(['staging/scss/style.scss']) //only grabbing style.scss @include will do the concat
+    .pipe(wait(500)) //gulp-wait, lets @includes finish before running
     .pipe(plumber()) //don't break the pipes if error
+    .pipe(sass.sync().on('error', sass.logError))
     .pipe(sass({
-      outputStyle: 'compressed'
-    }).on('error', sass.logError)) //specify outputStyle and watch for errors
+      outputStyle: 'expanded'
+    }))
     .pipe(autoprefixer('last 2 versions'))
-    .pipe(gulp.dest('public/css')) //confirm destination, 'public/stylesheets'
+    .pipe(gulp.dest('public/stylesheets'))
     .pipe(bs.stream()); //prompt a reload after completion
 });
 
@@ -90,6 +93,6 @@ gulp.task('html', function () {
 
 gulp.task('default', ['browser-sync'], function () {
   gulp.watch('staging/js/**/*.js', ['scripts', bs.reload]);
-  gulp.watch('staging/scss/*.scss', ['scss']);
+  gulp.watch('staging/scss/**/*.scss', ['scss']); //watching folders to catch changes in the subfolders
   gulp.watch(['views/**/*.pug', 'views/**/*.html'], ['html']);
 });
