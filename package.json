@@ -1,28 +1,52 @@
 {
   "name": "workbench",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "",
   "private": true,
+  "author": "Andrew Williams <andrew@itsanw.com> (http://www.itsanw.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/psudopr/workBench"
+  },
   "scripts": {
     "start": "gulp"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "express": "^4.16.3",
-    "gulp-wait": "0.0.2",
-    "morgan": "^1.9.0",
-    "pug": "~2.0.0-beta11",
-    "serve-favicon": "~2.4.2"
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "pug": "~2.0.0-beta11"
   },
   "devDependencies": {
-    "browser-sync": "^2.24.5",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^5.0.0",
-    "gulp-nodemon": "^2.2.1",
-    "gulp-plumber": "^1.2.0",
-    "gulp-rename": "^1.3.0",
-    "gulp-sass": "^4.0.1",
-    "gulp-uglify": "^3.0.0"
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "babelify": "^10.0.0",
+    "browserify": "^16.2.3",
+    "browserify-shim": "^3.8.14",
+    "browser-sync": "^2.26.3",
+    "gulp-concat": "^2.5.2",
+    "gulp-if": "^2.0.2",
+    "gulp-notify": "^3.0.0",
+    "gulp-options": "^1.1.1",
+    "debug": "^4.1.1",
+    "gulp": "^4.0.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-strip-debug": "^3.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-nodemon": "^2.4.2",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "gulp-wait": "0.0.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^2.0.0",
+    "serve-favicon": "^2.5.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }
