@@ -1,7 +1,7 @@
 {
   "name": "workbench",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express, NodeJS, Gulp v4, BrowserSync, Nodemon",
   "private": true,
   "author": "Andrew Williams <andrew@itsanw.com> (http://www.itsanw.com)",
   "repository": {
