@@ -1,5 +1,4 @@
 //load Gulp
-// const gulp = require('gulp');
 const { src, dest, task, watch, series, parallel } = require('gulp');
 
 //CSS plugins
@@ -187,65 +186,3 @@ task('html', html);
 task('callNodemon', callNodemon);
 task('bs', callBrowserSync);
 task('default', parallel(callNodemon, callBrowserSync, css, js, images, fonts, watch_files));
-// task('watch', parallel(callBrowserSync, callNodemon, watch_files));
-task('watch', parallel(callBrowserSync, watch_files));
-
-
-
-// gulp.task('browser-sync', ['nodemon', 'scss', 'scripts', 'html'], function () {
-//   bs.init({
-//     // server: {
-//     //     baseDir: "./"
-//     // },
-//     proxy: 'localhost:3000',
-//     browser: 'chrome',
-//     port: 8000,
-//     tunnel: true
-//   });
-// });
-
-// /*
-// SCRIPTS TASK
-// */
-// gulp.task('scripts', function () {
-//   gulp.src(['src/js/**/*.js', 'src/js/*.js', '!src/js/**/*.min.js']) //grabs everything with a .js extension
-//     .pipe(plumber()) //don't break the pipes
-//     .pipe(babel({
-//       presets: ['@babel/preset-env']
-//     })) //transpile es6 to plain js
-//     .pipe(rename({
-//       suffix: '.min'
-//     })) //rename file w/ a .min suffix
-//     .pipe(uglify()) //remove comments and whitespace
-//     .pipe(gulp.dest('public/js')); //dump file into the public folder
-// });
-
-// /*
-// SCSS TASK & AUTOPREFIXER
-// */
-// gulp.task('scss', function () {
-//   return gulp.src(['src/scss/style.scss']) //only grabbing style.scss @include will do the concat
-//     .pipe(wait(500)) //gulp-wait, lets @includes finish before running
-//     .pipe(plumber()) //don't break the pipes if error
-//     .pipe(sass.sync().on('error', sass.logError))
-//     .pipe(sass({
-//       outputStyle: 'expanded'
-//     }))
-//     .pipe(autoprefixer('last 2 versions'))
-//     .pipe(gulp.dest('public/stylesheets'))
-//     .pipe(bs.stream()); //prompt a reload after completion
-// });
-
-// /*
-// HTML (PUG) WATCH
-// */
-// gulp.task('html', function () {
-//   gulp.src(['views/**/*.pug', 'views/**/*.html']);
-//   bs.reload();
-// });
-
-// gulp.task('default', ['browser-sync'], function () {
-//   gulp.watch('src/js/**/*.js', ['scripts', bs.reload]);
-//   gulp.watch('src/scss/**/*.scss', ['scss']); //watching folders to catch changes in the subfolders
-//   gulp.watch(['views/**/*.pug', 'views/**/*.html'], ['html']);
-// });
