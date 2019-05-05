@@ -1,6 +1,6 @@
 {
   "name": "workbench",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Express, NodeJS, Gulp v4, BrowserSync, Nodemon",
   "private": true,
   "author": "Andrew Williams <andrew@itsanw.com> (http://www.itsanw.com)",
@@ -9,7 +9,8 @@
     "url": "https://github.com/psudopr/workBench"
   },
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "build": "gulp build"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -22,27 +23,29 @@
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "babelify": "^10.0.0",
+    "browser-sync": "^2.26.3",
     "browserify": "^16.2.3",
     "browserify-shim": "^3.8.14",
-    "browser-sync": "^2.26.3",
-    "gulp-concat": "^2.5.2",
+    "debug": "^4.1.1",
+    "del": "^4.1.1",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
     "gulp-if": "^2.0.2",
+    "gulp-nodemon": "^2.4.2",
     "gulp-notify": "^3.0.0",
     "gulp-options": "^1.1.1",
-    "debug": "^4.1.1",
-    "gulp": "^4.0.0",
-    "gulp-sourcemaps": "^2.6.1",
-    "gulp-strip-debug": "^3.0.0",
-    "gulp-autoprefixer": "^6.0.0",
-    "gulp-nodemon": "^2.4.2",
     "gulp-plumber": "^1.2.1",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.1",
+    "gulp-strip-debug": "^3.0.0",
     "gulp-uglify": "^3.0.2",
     "gulp-wait": "0.0.2",
+    "serve-favicon": "^2.5.0",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^2.0.0",
-    "serve-favicon": "^2.5.0"
+    "vinyl-source-stream": "^2.0.0"
   },
   "babel": {
     "presets": [

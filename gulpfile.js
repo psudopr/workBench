@@ -4,6 +4,8 @@ const { src, dest, task, watch, series, parallel } = require('gulp');
 //CSS plugins
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
+const concat = require('gulp-concat');
+const cleanCSS = require('gulp-clean-css');
 
 //JS plugins
 const uglify = require('gulp-uglify');
@@ -22,12 +24,14 @@ const sourcemaps = require('gulp-sourcemaps');
 const notify = require('gulp-notify');
 const options = require('gulp-options');
 const gulpif = require('gulp-if');
+const del = require('del');
 
 //Browser plugins
 const bs = require('browser-sync').create();
 
 //Project Variables
-const styleSRC = './src/scss/style.scss';
+const styleSRCDir = './src/scss/**/*.scss';
+const styleBundle = './src/scss/style.scss';
 const styleDist = './public/stylesheets/';
 const mapURL = './';
 
@@ -57,13 +61,13 @@ const htmlWatch = './views/**/*.*';
 function callNodemon(cb) {
   let called = false;
   return nodemon({
-  
+
     // nodemon our expressjs server
     script: './bin/www',
-  
+
     // watch core server file(s) that require server restart on change
     watch: ['app.js', 'routes/*.js']
-  
+
   })
     .on('start', function onStart() {
       // ensure start only got called once
@@ -99,23 +103,44 @@ function reload(done) {
   done();
 }
 
-function css(done) {
-  src([styleSRC])
-    .pipe(sourcemaps.init())
+function delSweep() {
+  (async () => {
+    const deletedPaths = await del(['src/scss/bundle.css', 'public/stylesheets/style.min.css'],
+      {
+        dryRun: false
+      });
+    console.log('Deleted files and folders:\n', deletedPaths.join('\n'));
+  })();
+}
+
+function concatSCSS() {
+  // (async () => {
+  //   await delSweep()
+  //   console.log('delSweep done')
+  // })();
+  return src('src/scss/**/*.scss')
+    .pipe(concat('bundle.scss'))
     .pipe(sass({
       errLogToConsole: true,
       outputStyle: 'expanded' //compressed
     }))
     .on('error', console.error.bind(console))
+    .pipe(dest('src/scss/'));
+}
+
+function css(done) {
+  src('./src/scss/bundle.css')
+    .pipe(cleanCSS())
+    .pipe(sourcemaps.init())
     .pipe(autoprefixer({
       browsers: ['last 2 versions', '> 5%', 'Firefox ESR']
     }))
     .pipe(rename({
+      basename: 'style',
       suffix: '.min'
     }))
     .pipe(sourcemaps.write(mapURL))
-    .pipe(dest(styleDist))
-    // .pipe(bs.stream());
+    .pipe(dest('./public/stylesheets/'));
   done();
 }
 
@@ -140,7 +165,6 @@ function js(done) {
       .pipe(uglify())
       .pipe(sourcemaps.write('.'))
       .pipe(dest(jsDist))
-      // .pipe(bs.stream());
   });
   done();
 }
@@ -167,7 +191,7 @@ function html(done) {
 }
 
 function watch_files() {
-  watch(styleWatch, series(css, reload));
+  watch(styleWatch, series(concatSCSS, css, reload));
   watch(jsWatch, series(js, reload));
   watch(imgWatch, series(images, reload));
   watch(fontsWatch, series(fonts, reload));
@@ -178,11 +202,14 @@ function watch_files() {
     }));
 }
 
-task('css', css);
+task('delSweep', delSweep);
+task('concatSCSS', series(delSweep, concatSCSS));
+task('css', series(css));
 task('js', js);
 task('images', images);
 task('fonts', fonts);
 task('html', html);
 task('callNodemon', callNodemon);
 task('bs', callBrowserSync);
-task('default', parallel(callNodemon, callBrowserSync, css, js, images, fonts, watch_files));
+task('build', series(concatSCSS, css, js));
+task('default', parallel(callNodemon, callBrowserSync, concatSCSS, css, js, images, fonts, watch_files));
