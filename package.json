@@ -19,7 +19,7 @@
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
-    "pug": "^2.0.4"
+    "pug": "^3.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
